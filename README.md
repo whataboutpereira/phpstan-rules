@@ -57,6 +57,7 @@ Few rules are enabled, but do nothing unless configured, those are marked with `
 
 ### allowComparingOnlyComparableTypes
 - Denies using comparison operators `>,<,<=,>=,<=>` over anything other than `int|string|float|DateTimeInterface|BcMath\Number` or same size tuples containing comparable types. Null is not allowed.
+- You can allow comparing `BcMath\Number` with numeric-string by using `allowNumericString: true` configuration
 - Mixing different types in those operators is also forbidden, only exception is comparing floats with integers and integers with `BcMath\Number`
 - Mainly targets to accidental comparisons of objects, enums or arrays which is valid in PHP, but very tricky
 

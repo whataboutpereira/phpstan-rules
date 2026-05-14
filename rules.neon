@@ -4,6 +4,7 @@ parameters:
 
         allowComparingOnlyComparableTypes:
             enabled: %shipmonkRules.enableAllRules%
+            allowNumericString: false
         backedEnumGenerics:
             enabled: %shipmonkRules.enableAllRules%
         classSuffixNaming:
@@ -96,6 +97,7 @@ parametersSchema:
 
         allowComparingOnlyComparableTypes: structure([
             enabled: bool()
+            allowNumericString: bool()
         ])
         backedEnumGenerics: structure([
             enabled: bool()
@@ -305,6 +307,8 @@ conditionalTags:
 services:
     -
         class: ShipMonk\PHPStan\Rule\AllowComparingOnlyComparableTypesRule
+        arguments:
+            allowNumericString: %shipmonkRules.allowComparingOnlyComparableTypes.allowNumericString%
     -
         class: ShipMonk\PHPStan\Rule\BackedEnumGenericsRule
     -

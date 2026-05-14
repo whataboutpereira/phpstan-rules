@@ -11,6 +11,7 @@ interface Bar {}
 
 /**
  * @param Foo[] $foos
+ * @param numeric-string $ns
  */
 $fn = function (
     array $foos,
@@ -21,6 +22,7 @@ $fn = function (
     DateTime $dateTime,
     DateTimeImmutable $dateTimeImmutable,
     Number $number,
+    string $ns,
     string $string,
     int $int,
     ?int $nullableInt,
@@ -54,6 +56,7 @@ $fn = function (
     $number > $intOrFloat; // error: Cannot compare different types in BcMath\Number > float|int.
     $number > $foo; // error: Comparison BcMath\Number > AllowComparingOnlyComparableTypesRule\Foo contains non-comparable type, only int|float|string|DateTimeInterface or comparable tuple is allowed.
     $number > $nullableInt; // error: Comparison BcMath\Number > int|null contains non-comparable type, only int|float|string|DateTimeInterface or comparable tuple is allowed.
+    $number > $ns; // error: Cannot compare different types in BcMath\Number > string.
 
     [$int, $string] > [$int, $string];
     [[$int]] > [[$int]];

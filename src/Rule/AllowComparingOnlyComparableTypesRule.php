@@ -30,6 +30,13 @@ use const PHP_VERSION_ID;
 class AllowComparingOnlyComparableTypesRule implements Rule
 {
 
+    private bool $allowNumericString;
+
+    public function __construct(bool $allowNumericString)
+    {
+        $this->allowNumericString = $allowNumericString;
+    }
+
     public function getNodeType(): string
     {
         return BinaryOp::class;
@@ -119,11 +126,13 @@ class AllowComparingOnlyComparableTypesRule implements Rule
         $bcMathNumberType = new ObjectType('BcMath\Number');
 
         if ($this->containsOnlyTypes($leftType, [$bcMathNumberType])) {
-            return $this->containsOnlyTypes($rightType, [$bcMathNumberType, $intType]);
+            return $this->containsOnlyTypes($rightType, [$bcMathNumberType, $intType])
+                || ($this->allowNumericString && $rightType->isNumericString()->yes());
         }
 
         if ($this->containsOnlyTypes($rightType, [$bcMathNumberType])) {
-            return $this->containsOnlyTypes($leftType, [$bcMathNumberType, $intType]);
+            return $this->containsOnlyTypes($leftType, [$bcMathNumberType, $intType])
+                || ($this->allowNumericString && $leftType->isNumericString()->yes());
         }
 
         if ($this->containsOnlyTypes($leftType, [$intType, $floatType])) {
